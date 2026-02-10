@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Offene Geisternetze</title>
+</head>
+<body>
+
+<h1>Offene Geisternetze</h1>
+
+<a th:href="@{/nets/report}">Neues Geisternetz melden</a>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+        <th>Größe</th>
+        <th>Status</th>
+        <th>Bergende Person</th>
+        <th>Aktionen</th>
+    </tr>
+
+    <tr th:each="net : ${nets}">
+        <td th:text="${net.id}"></td>
+        <td th:text="${net.latitude}"></td>
+        <td th:text="${net.longitude}"></td>
+        <td th:text="${net.sizeEstimate}"></td>
+        <td th:text="${net.status}"></td>
+        <td th:text="${net.salvagingPerson != null ? net.salvagingPerson.name : '–'}"></td>
+
+        <td>
+            <a th:href="@{|/nets/${net.id}/assign|}">Bergung übernehmen</a>
+
+            <form th:action="@{|/nets/${net.id}/recover|}" method="post" style="display:inline">
+                <button type="submit">Geborgen</button>
+            </form>
+
+            <form th:action="@{|/nets/${net.id}/lost|}" method="post" style="display:inline">
+                <button type="submit">Verschollen</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bergung übernehmen</title>
+</head>
+<body>
+
+<h1>Bergung übernehmen</h1>
+
+<form th:action="@{|/nets/${netId}/assign|}" method="post">
+    <label>Name:
+        <input type="text" name="name" required>
+    </label>
+    <br>
+
+    <label>Telefonnummer:
+        <input type="text" name="phoneNumber" required>
+    </label>
+    <br><br>
+
+    <button type="submit">Bergung übernehmen</button>
+</form>
+
+<br>
+<a th:href="@{/nets}">Zurück zur Übersicht</a>
+
+</body>
+</html>
