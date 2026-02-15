@@ -38,7 +38,15 @@ public class GhostNetController {
                             @RequestParam Double longitude,
                             @RequestParam String sizeEstimate,
                             @RequestParam(required = false) String name,
-                            @RequestParam(required = false) String phoneNumber) {
+                            @RequestParam(required = false) String phoneNumber,
+                            Model model) {
+
+        // Wenn Name angegeben, dann Telefon Pflicht
+        if (name != null && !name.isBlank() && (phoneNumber == null || phoneNumber.isBlank())) {
+            model.addAttribute("error", "Wenn du einen Namen angibst, musst du auch eine Telefonnummer angeben.");
+            return "nets/report";
+        }
+
         ghostNetService.reportGhostNet(latitude, longitude, sizeEstimate, name, phoneNumber);
         return "redirect:/nets";
     }
@@ -68,8 +76,15 @@ public class GhostNetController {
 
     // COULD 7: Als verschollen melden
     @PostMapping("/{id}/lost")
-    public String markLost(@PathVariable Long id) {
-        ghostNetService.markAsLost(id);
+    public String markLost(@PathVariable Long id,
+                           @RequestParam String name,
+                           @RequestParam String phoneNumber) {
+        ghostNetService.markAsLost(id, name, phoneNumber);
         return "redirect:/nets";
+    }
+    @GetMapping("/{id}/lost")
+    public String showLostForm(@PathVariable Long id, Model model) {
+        model.addAttribute("netId", id);
+        return "nets/lost";
     }
 }

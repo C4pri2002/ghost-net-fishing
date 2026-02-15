@@ -103,9 +103,20 @@ public class GhostNetService {
      * COULD 7:
      * Geisternetz als verschollen melden
      */
-    public void markAsLost(Long netId) {
+    public void markAsLost(Long netId, String name, String phoneNumber) {
+        if (name == null || name.isBlank() || phoneNumber == null || phoneNumber.isBlank()) {
+            throw new RuntimeException("Verschollen melden ist nicht anonym möglich (Name + Telefon erforderlich).");
+        }
+
         GhostNet net = ghostNetRepository.findById(netId)
                 .orElseThrow(() -> new RuntimeException("Geisternetz nicht gefunden"));
+
+        // Optional: Person speichern (für Nachfragen)
+        Person reporter = new Person();
+        reporter.setName(name);
+        reporter.setPhoneNumber(phoneNumber);
+        reporter.setType(PersonType.MELDEND);
+        personRepository.save(reporter);
 
         net.setStatus(GhostNetStatus.VERSCHOLLEN);
     }

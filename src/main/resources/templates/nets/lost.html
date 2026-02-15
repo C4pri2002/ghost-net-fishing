@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Geisternetz als verschollen melden</title>
+</head>
+<body>
+
+<h1>Geisternetz als verschollen melden</h1>
+
+<p>Hinweis: Verschollen melden ist nicht anonym möglich (Name + Telefonnummer erforderlich).</p>
+
+<form th:action="@{|/nets/${netId}/lost|}" method="post">
+    <label>Name:
+        <input type="text" name="name" required>
+    </label>
+    <br>
+
+    <label>Telefonnummer:
+        <input type="text" name="phoneNumber" required>
+    </label>
+    <br><br>
+
+    <button type="submit">Als verschollen melden</button>
+</form>
+
+<br>
+<a th:href="@{/nets}">Zurück zur Übersicht</a>
+
+</body>
+</html>

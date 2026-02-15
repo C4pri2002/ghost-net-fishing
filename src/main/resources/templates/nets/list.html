@@ -35,9 +35,7 @@
                 <button type="submit">Geborgen</button>
             </form>
 
-            <form th:action="@{|/nets/${net.id}/lost|}" method="post" style="display:inline">
-                <button type="submit">Verschollen</button>
-            </form>
+            <a th:href="@{|/nets/${net.id}/lost|}">Verschollen</a>
         </td>
     </tr>
 </table>
